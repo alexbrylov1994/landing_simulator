@@ -1,0 +1,48 @@
+Given an airport with a number of runaways and airplane parkings, your task is to simulate the landing scenario for a set of airplanes.
+Each airplane is defined as a 6-tuple as follows:
+(ID, Fuel, Fuel burn rate, Landing time, Taxi time, Unload time) where
+• ID: is the unique identifier of the plane.
+• Fuel: is an integer showing how much fuel the plane has.
+• Fuel burn rate: is an integer showing how much fuel is burnt at a unit of time.
+• Landing time: is an integer showing how many units of time it takes for the plane to land.
+• Taxi time: is an integer showing how many units of time it takes for the plane to reach the parking, after it had landed.
+• Unload time: is an integer showing how many units of time it takes for the plane to unload its cargo, after it had arrived at the parking.
+The program should read the number of runaways, the number of the park- ings, and time unit as input from a file as will be specified below. After reading these numbers from the file the program should run a thread and wait for in- puts about the arrival of planes. The input should be read from standard input (stdin) and has a specific format which will be described below. After receiving all the inputs about the planes, the program should determine whether it was
+1
+able to land all the planes successfully or not and report the result in a file with a specific format defined below.
+A plane can land if at least one of the runaways is empty and if by the time it finishes taxing, at least one of the parkings is empty. Moreover, the plane should have enough fuel to successfully land and taxi (planes burn fuel in all states, except for the unloading phase). At each point in time, there can only be one plane per runaway line and one plane in each parking. Planes can go to any of the parkings from any of the runaways. If all the runaways are occupied, or if by the time the plane reaches the parking, all the parkings are occupied, then the plane should wait in the air (note that the plain burns fuel while waiting in the air).
+Moreover, the planes should be landed in the order that they have arrived (FIFO).
+3 Input/Output format
+The code should run as a command line program and it should receive its input using command line argument:
+• -h: should show a short description of what the program does and how to run it. Along with the name and email of the developers of the code.
+• -f <input_file_name>: specifies the path to the input file which contains information about runaways, parkings, and time unit (time unit is an integer showing how long a unit of time is in seconds).
+• -o <output_file_name>: specifies the path to the output file.
+Therefore, there are “only” two valid ways of running the program:
+1. <program_name> -h
+2. <program_name> -f <input_file_name> -o <output_file_name>
+After running the program using the second option, it should be able to receive and parse the following input format at anytime during its run time:
+CASE <number>:
+<plain_tuple>
+<plain_tuple>
+....
+<plain_tuple>
+<empty_line>
+CASE <number>:
+....
+....
+<empty_line>
+END
+2
+Where each case is considered a landing scenario. An empty line signals the end of a scenario. After each scenario, the program should output one of the following in the output file.
+4
+1. If the scenario is invalid, i.e. at least one plane ran out of fuel before reaching the parking. In this case, the program should write the following in file:
+  CASE <number>: IMPOSSIBLE
+  <emty_line>
+2. If all planes can land successfully, the following should be written:
+  CASE <number>: POSSIBLE
+  <plain_id> LANDED AT <time_unit> WITH <fuel> REMAINING.
+  .....
+  {for all planes in this scenario}
+  .....
+  <empty_line>
+A sample input and output will be provided in separate files.
